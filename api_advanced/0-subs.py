@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 import requests
 
 def number_of_subscribers(subreddit):
@@ -31,4 +32,3 @@ def number_of_subscribers(subreddit):
         # Handle any exceptions
         print(f"An error occurred: {str(e)}")
         return 0
-
