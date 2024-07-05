@@ -18,10 +18,13 @@ def fetch_subscriber_count(subreddit):
         print("OK")
         return 0
 
-    data = response.json()
-    if 'data' not in data or 'subscribers' not in data['data']:
+    try:
+        data = response.json()
+        if 'data' not in data or 'subscribers' not in data['data']:
+            print("OK")
+            return 0
+        print("OK")
+        return data['data']['subscribers']
+    except ValueError:
         print("OK")
         return 0
-    
-    print("OK")
-    return data['data']['subscribers'
