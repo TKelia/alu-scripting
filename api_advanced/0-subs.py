@@ -21,4 +21,3 @@ def fetch_subscriber_count(subreddit):
     if 'data' not in data or 'subscribers' not in data['data']:
         return 0
     return data['data']['subscribers']
-
