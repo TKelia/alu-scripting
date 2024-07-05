@@ -1,34 +1,23 @@
 #!/usr/bin/python3
+"""
+Fetches the number of subscribers for a specified Reddit subreddit.
+"""
+
 import requests
 
-def number_of_subscribers(subreddit):
-    # Construct the URL for subreddit information
-    url = f"https://www.reddit.com/r/{subreddit}/about.json"
-    
-    # Set a custom User-Agent header to avoid rate limiting
+def get_subscriber_count(subreddit):
+    """ Fetches subscriber count from Reddit API """
+    user_agent = 'Mozilla/5.0'
+
     headers = {
-        'User-Agent': 'Python script for fetching subreddit subscribers (by /u/yourusername)'
+        'User-Agent': user_agent
     }
-    
-    try:
-        # Send a GET request to Reddit API
-        response = requests.get(url, headers=headers)
-        
-        # Check if request was successful (status code 200)
-        if response.status_code == 200:
-            # Parse JSON response
-            data = response.json()
-            
-            # Extract number of subscribers
-            subscribers = data['data']['subscribers']
-            
-            return subscribers
-        else:
-            # Handle unsuccessful request
-            print(f"Failed to fetch data for subreddit '{subreddit}'. Status code: {response.status_code}")
-            return 0
-        
-    except Exception as e:
-        # Handle any exceptions
-        print(f"An error occurred: {str(e)}")
+
+    url = f"https://www.reddit.com/r/{subreddit}/about.json"
+    response = requests.get(url, headers=headers, allow_redirects=False)
+    if response.status_code != 200:
         return 0
+    data = response.json()
+    if 'data' not in data or 'subscribers' not in data['data']:
+        return 0
+    return data['data']['subscribers']
